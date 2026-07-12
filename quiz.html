@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mera Quiz App</title>
+  <style>
+    /* Center layout */
+    body {
+      background-color: #eef2f3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    /* Main Quiz Box */
+    .quiz-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      width: 450px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    /* Option Buttons Styling */
+    .options-btn {
+      display: block;
+      width: 100%;
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ddd;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    .options-btn:hover {
+      background-color: #e2e2e2;
+    }
+
+    /* Next Button */
+    #nextBtn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      float: right;
+      margin-top: 15px;
+    }
+
+    #nextBtn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <!-- Sawal aur Options dynamically JS se aayenge -->
+    <div id="quiz-box">
+      <h2 id="question">Sawal yahan aayega...</h2>
+      <div id="options-container"></div>
+      <button id="nextBtn" onclick="loadNextQuestion()">Next</button>
+    </div>
+    
+    <!-- Result box jo shuru mein chupa hoga -->
+    <div id="result-box" style="display: none; text-align: center;">
+      <h2>Quiz Mukammal! 🎉</h2>
+      <p id="score-text" style="font-size: 24px; font-weight: bold; color: #28a745;"></p>
+      <button onclick="location.reload()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">Dubara Kheleinf</button>
+    </div>
+  </div>
+
+  <script>
+    // 1. Sawalon ka Data (Array of Objects)
+    const quizData = [
+      {
+        question: "HTML ka poora naam kya hai?",
+        options: ["Hyper Text Markup Language", "High Tech Machine Language", "Hyper Link Mark Language", "Home Text Multi Language"],
+        correct: 0
+      },
+      {
+        question: "CSS kis kaam ke liye istemaal hoti hai?",
+        options: ["Database ke liye", "Website ko design karne ke liye", "Server chalane ke liye", "Logic likhne ke liye"],
+        correct: 1
+      },
+      {
+        question: "JS ka kya matlab hai?",
+        options: ["JustScript", "JavaSuper", "JavaScript", "JodiScript"],
+        correct: 2
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let selectedOptionIndex = null;
+
+    // 2. Screen par sawal aur options dikhane ka function
+    function showQuestion() {
+      selectedOptionIndex = null;
+      const currentQuiz = quizData[currentQuestionIndex];
+      
+      // Sawal tabdeel karna
+      document.getElementById('question').textContent = currentQuiz.question;
+      
+      // Options buttons banana
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = ''; // Purane options saaf karna
+
+      currentQuiz.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.textContent = option;
+        button.className = 'options-btn';
+        
+        // Option select karne par rang badalna
+        button.onclick = function() {
+          selectedOptionIndex = index;
+          // Pehle saare buttons ka rang normal karen
+          const allButtons = document.querySelectorAll('.options-btn');
+          allButtons.forEach(btn => btn.style.backgroundColor = '#f0f0f0');
+          // Sirf select kiye gaye button ka rang badlein
+          button.style.backgroundColor = '#d1ecf1';
+        };
+        
+        optionsContainer.appendChild(button);
+      });
+    }
+
+    // 3. Next button dabane par kya ho
+    function loadNextQuestion() {
+      if (selectedOptionIndex === null) {
+        alert("Pehle kisi ek option ko select karen!");
+        return;
+      }
+
+      // Score check karna
+      if (selectedOptionIndex === quizData[currentQuestionIndex].correct) {
+        score++;
+      }
+
+      currentQuestionIndex++;
+
+      // Agar sawal baaki hain to agla sawal dikhayein, nahi to result
+      if (currentQuestionIndex < quizData.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    // 4. Result dikhane ka function
+    function showResult() {
+      document.getElementById('quiz-box').style.display = 'none';
+      document.getElementById('result-box').style.display = 'block';
+      document.getElementById('score-text').textContent = "Aapka Score: " + score + " / " + quizData.length;
+    }
+
+    // Pehli baar quiz shuru karne ke liye
+    showQuestion();
+  </script>
+
+</body>
+</html>
+
+</body>
+</html>

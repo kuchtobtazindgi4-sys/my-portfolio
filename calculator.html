@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mera Calculator</title>
+  <style>
+    /* 1. Calculator ko screen ke darmiyan mein lane ke liye */
+    body {
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    /* 2. Calculator ka main box */
+    .calculator {
+      background-color: #333;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+      width: 300px;
+    }
+
+    /* 3. Screen jahan numbers nazar aayenge */
+    #screen {
+      width: 100%;
+      height: 60px;
+      background-color: #fff;
+      font-size: 32px;
+      text-align: right;
+      padding: 5px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    /* 4. Buttons ka grid layout (ek line mein 4 buttons) */
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    /* 5. Buttons ki styling */
+    button {
+      padding: 20px;
+      font-size: 20px;
+      background-color: #e0e0e0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:active {
+      background-color: #bbb;
+    }
+
+    /* Clear aur Equal buttons ka alag rang */
+    .operator {
+      background-color: #ff9500;
+      color: white;
+    }
+
+    .clear {
+      background-color: #ff3b30;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Calculator ka Structure -->
+  <div class="calculator">
+    <!-- Screen -->
+    <input type="text" id="screen" readonly>
+
+    <!-- Buttons -->
+    <div class="buttons">
+      <button class="clear" onclick="clearScreen()">C</button>
+      <button onclick="press('/')">/</button>
+      <button onclick="press('*')">*</button>
+      <button onclick="press('-')">-</button>
+
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button class="operator" onclick="press('+')">+</button>
+
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button class="operator" style="grid-row: span 2; height: 100%;" onclick="calculate()">=</button>
+
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3') font-size:20px;">3</button>
+
+      <button onclick="press('0')" style="grid-column: span 2;">0</button>
+      <button onclick="press('.') font-size:20px;">.</button>
+    </div>
+  </div>
+
+  <!-- JavaScript ka Jadu (Logic) -->
+  <script>
+    const screen = document.getElementById('screen');
+
+    // Button dabane par number screen par likhne ke liye
+    function press(value) {
+      screen.value += value;
+    }
+
+    // Screen ko saaf (Clear) karne ke liye
+    function clearScreen() {
+      screen.value = '';
+    }
+
+    // Hisab-kitab (Calculate) karne ke liye
+    function calculate() {
+      try {
+        // eval() function khud hi math solve kar deta hai (e.g. "2+5*3" ko 17 bana dega)
+        screen.value = eval(screen.value);
+      } catch (error) {
+        screen.value = 'Error';
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+    
+</body>
+</html> 
