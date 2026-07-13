@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body><!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
-  <title>Meri Digital Clock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Digital Clock</title>
   <style>
-    /* 1. Clock ko screen ke bilkul center mein lane ke liye */
+    /* 1. Center the clock perfectly on the screen */
     body {
       background-color: #1a1a2e; /* Dark theme background */
       display: flex;
@@ -22,7 +16,7 @@
       font-family: 'Courier New', Courier, monospace; /* Digital look font */
     }
 
-    /* 2. Clock ka main box */
+    /* 2. Main container box for the clock */
     .clock-container {
       background-color: #16213e;
       padding: 30px 50px;
@@ -31,7 +25,7 @@
       border: 2px solid #0f3460;
     }
 
-    /* 3. Numbers ki styling */
+    /* 3. Styling for the numbers */
     .clock-text {
       font-size: 60px;
       color: #00fff5; /* Neon Cyan color */
@@ -42,43 +36,39 @@
 </head>
 <body>
 
-  <!-- Clock ka Structure -->
+  <!-- Clock Structure -->
   <div class="clock-container">
     <div id="myClock" class="clock-text">00:00:00</div>
   </div>
 
-  <!-- JavaScript ka Jadu (Live Time Logic) -->
+  <!-- JavaScript for Live Time Logic -->
   <script>
     function updateClock() {
-      // 1. Live time ka data lena
+      // 1. Fetch live date and time data
       const now = new Date();
       
       let hours = now.getHours();
       let minutes = now.getMinutes();
       let seconds = now.getSeconds();
 
-      // 2. Agar number 10 se chota ho to shuru mein '0' lagana (e.g. 05 seconds)
+      // 2. Add leading zero if the number is less than 10 (e.g., 05 seconds)
       if (hours < 10) hours = '0' + hours;
       if (minutes < 10) minutes = '0' + minutes;
       if (seconds < 10) seconds = '0' + seconds;
 
-      // 3. Time ko text ki tarah jorna
+      // 3. Format the time string
       const timeString = hours + ':' + minutes + ':' + seconds;
 
-      // 4. HTML ke andar time ko show karna
+      // 4. Display the time inside the HTML element
       document.getElementById('myClock').textContent = timeString;
     }
 
-    // 5. Is function ko har 1 second (1000 milliseconds) baad chalana
+    // 5. Run this function every 1 second (1000 milliseconds)
     setInterval(updateClock, 1000);
 
-    // Pehli baar clock ko foran chalane ke liye
+    // Initialize the clock immediately on page load
     updateClock();
   </script>
 
-</body>
-</html>
-
-    
 </body>
 </html>
