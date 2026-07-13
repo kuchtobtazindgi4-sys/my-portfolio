@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense Tracker (PKR Version)</title>
+  <style>
+    /* 1. Global & Centering Settings */
+    body {
+      background-color: #f4f7f6;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* 2. Main App Container Box */
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      color: #333;
+    }
+
+    /* 3. Balance Box Display */
+    .balance-box {
+      background-color: #16213e;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .balance-box h3 {
+      margin: 0;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #bbb;
+    }
+
+    .balance-box h1 {
+      margin: 10px 0 0 0;
+      font-size: 32px;
+    }
+
+    /* 4. Form Controls Area */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    /* 5. History List Area */
+    h3.list-title {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      margin-top: 25px;
+      color: #333;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    li {
+      background-color: #f8f9fa;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    /* Income vs Expense borders */
+    .income-item { border-left: 5px solid #28a745; }
+    .expense-item { border-left: 5px solid #dc3545; }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .delete-btn:hover { background-color: #bd2130; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Expense Tracker</h2>
+
+    <!-- Live Total Balance Box -->
+    <div class="balance-box">
+      <h3>Your Balance</h3>
+      <h1 id="totalBalance">Rs. 0.00</h1>
+    </div>
+
+    <!-- Add Transaction Form -->
+    <div class="form-group">
+      <label for="text">Description</label>
+      <input type="text" id="textInput" placeholder="e.g., Salary, Groceries, Rent">
+    </div>
+
+    <div class="form-group">
+      <label for="amount">Amount (Rs.)</label>
+      <input type="number" id="amountInput" placeholder="Enter amount...">
+    </div>
+
+    <div class="form-group">
+      <label for="type">Transaction Type</label>
+      <select id="typeInput">
+        <option value="income">Income (+)</option>
+        <option value="expense">Expense (-)</option>
+      </select>
+    </div>
+
+    <button onclick="addTransaction()">Add Transaction</button>
+
+    <!-- History List -->
+    <h3 class="list-title">History</h3>
+    <ul id="transactionList"></ul>
+  </div>
+
+  <!-- JavaScript Logic with LocalStorage -->
+  <script>
+    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+    function addTransaction() {
+      const text = document.getElementById('textInput').value.trim();
+      const amount = parseFloat(document.getElementById('amountInput').value);
+      const type = document.getElementById('typeInput').value;
+
+      if (text === "" || isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid description and positive amount!");
+        return;
+      }
+
+      const transaction = {
+        id: Date.now(),
+        text: text,
+        amount: type === 'expense' ? -amount : amount
+      };
+
+      transactions.push(transaction);
+      updateLocalStorageAndUI();
+
+      document.getElementById('textInput').value = "";
+      document.getElementById('amountInput').value = "";
+    }
+
+    function deleteTransaction(id) {
+      transactions = transactions.filter(t => t.id !== id);
+      updateLocalStorageAndUI();
+    }
+
+    function updateLocalStorageAndUI() {
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+      renderUI();
+    }
+
+    function renderUI() {
+      const list = document.getElementById('transactionList');
+      const balanceDisplay = document.getElementById('totalBalance');
+      
+      list.innerHTML = ""; 
+      let totalBalance = 0;
+
+      transactions.forEach(t => {
+        totalBalance += t.amount;
+
+        const li = document.createElement('li');
+        li.className = t.amount > 0 ? 'income-item' : 'expense-item';
+        
+        const sign = t.amount > 0 ? '+' : '-';
+        const absoluteAmount = Math.abs(t.amount);
+
+        // CHANGED: Fixed currency display format to Rs.
+        li.innerHTML = `
+          <span>${t.text}</span>
+          <span>${sign} Rs. ${absoluteAmount.toFixed(2)} 
+            <button class="delete-btn" onclick="deleteTransaction(${t.id})">X</button>
+          </span>
+        `;
+        list.appendChild(li);
+      });
+
+      // CHANGED: Balance label updated to Rs.
+      balanceDisplay.textContent = `Rs. ${totalBalance.toFixed(2)}`;
+      if (totalBalance < 0) {
+        balanceDisplay.style.color = "#dc3545";
+      } else {
+        balanceDisplay.style.color = "#00fff5";
+      }
+    }
+
+    renderUI();
+  </script>
+
+</body>
+</html>
