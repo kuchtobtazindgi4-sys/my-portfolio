@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
-  <title>Mera Quiz App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Quiz App</title>
   <style>
     /* Center layout */
     body {
@@ -77,36 +70,36 @@
 <body>
 
   <div class="quiz-container">
-    <!-- Sawal aur Options dynamically JS se aayenge -->
+    <!-- Questions and Options will load dynamically via JS -->
     <div id="quiz-box">
-      <h2 id="question">Sawal yahan aayega...</h2>
+      <h2 id="question">Question will appear here...</h2>
       <div id="options-container"></div>
       <button id="nextBtn" onclick="loadNextQuestion()">Next</button>
     </div>
     
-    <!-- Result box jo shuru mein chupa hoga -->
+    <!-- Result box hidden initially -->
     <div id="result-box" style="display: none; text-align: center;">
-      <h2>Quiz Mukammal! 🎉</h2>
+      <h2>Quiz Completed! 🎉</h2>
       <p id="score-text" style="font-size: 24px; font-weight: bold; color: #28a745;"></p>
-      <button onclick="location.reload()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">Dubara Kheleinf</button>
+      <button onclick="location.reload()" style="padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 6px; border: 1px solid #ccc; background-color: #fff;">Play Again</button>
     </div>
   </div>
 
   <script>
-    // 1. Sawalon ka Data (Array of Objects)
+    // 1. Question Data (Array of Objects)
     const quizData = [
       {
-        question: "HTML ka poora naam kya hai?",
+        question: "What does HTML stand for?",
         options: ["Hyper Text Markup Language", "High Tech Machine Language", "Hyper Link Mark Language", "Home Text Multi Language"],
         correct: 0
       },
       {
-        question: "CSS kis kaam ke liye istemaal hoti hai?",
-        options: ["Database ke liye", "Website ko design karne ke liye", "Server chalane ke liye", "Logic likhne ke liye"],
+        question: "What is CSS used for?",
+        options: ["For managing databases", "For styling and designing websites", "For running servers", "For writing logical algorithms"],
         correct: 1
       },
       {
-        question: "JS ka kya matlab hai?",
+        question: "What does JS stand for?",
         options: ["JustScript", "JavaSuper", "JavaScript", "JodiScript"],
         correct: 2
       }
@@ -116,30 +109,30 @@
     let score = 0;
     let selectedOptionIndex = null;
 
-    // 2. Screen par sawal aur options dikhane ka function
+    // 2. Function to display question and options on screen
     function showQuestion() {
       selectedOptionIndex = null;
       const currentQuiz = quizData[currentQuestionIndex];
       
-      // Sawal tabdeel karna
+      // Update question text
       document.getElementById('question').textContent = currentQuiz.question;
       
-      // Options buttons banana
+      // Generate option buttons
       const optionsContainer = document.getElementById('options-container');
-      optionsContainer.innerHTML = ''; // Purane options saaf karna
+      optionsContainer.innerHTML = ''; // Clear old options
 
       currentQuiz.options.forEach((option, index) => {
         const button = document.createElement('button');
         button.textContent = option;
         button.className = 'options-btn';
         
-        // Option select karne par rang badalna
+        // Change color on selecting an option
         button.onclick = function() {
           selectedOptionIndex = index;
-          // Pehle saare buttons ka rang normal karen
+          // Reset all buttons to normal color first
           const allButtons = document.querySelectorAll('.options-btn');
           allButtons.forEach(btn => btn.style.backgroundColor = '#f0f0f0');
-          // Sirf select kiye gaye button ka rang badlein
+          // Highlight only the selected button
           button.style.backgroundColor = '#d1ecf1';
         };
         
@@ -147,21 +140,21 @@
       });
     }
 
-    // 3. Next button dabane par kya ho
+    // 3. Logic when Next button is clicked
     function loadNextQuestion() {
       if (selectedOptionIndex === null) {
-        alert("Pehle kisi ek option ko select karen!");
+        alert("Please select an option first!");
         return;
       }
 
-      // Score check karna
+      // Check answer score
       if (selectedOptionIndex === quizData[currentQuestionIndex].correct) {
         score++;
       }
 
       currentQuestionIndex++;
 
-      // Agar sawal baaki hain to agla sawal dikhayein, nahi to result
+      // If more questions remain, load next; otherwise show results
       if (currentQuestionIndex < quizData.length) {
         showQuestion();
       } else {
@@ -169,19 +162,16 @@
       }
     }
 
-    // 4. Result dikhane ka function
+    // 4. Function to display results
     function showResult() {
       document.getElementById('quiz-box').style.display = 'none';
       document.getElementById('result-box').style.display = 'block';
-      document.getElementById('score-text').textContent = "Aapka Score: " + score + " / " + quizData.length;
+      document.getElementById('score-text').textContent = "Your Score: " + score + " / " + quizData.length;
     }
 
-    // Pehli baar quiz shuru karne ke liye
+    // Initialize quiz on page load
     showQuestion();
   </script>
-
-</body>
-</html>
 
 </body>
 </html>
