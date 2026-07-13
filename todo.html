@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
-  <title>Meri To-Do List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My To-Do List</title>
   <style>
-    /* 1. App ko screen ke bilkul center mein lane ke liye */
+    /* 1. Center the app perfectly on the screen */
     body {
       background-color: #f7f9fc;
       display: flex;
@@ -38,7 +31,7 @@
       text-align: center;
     }
 
-    /* 3. Input aur Add Button ka Layout */
+    /* 3. Layout for Input and Add Button */
     .input-area {
       display: flex;
       gap: 10px;
@@ -67,7 +60,7 @@
       background-color: #0056b3;
     }
 
-    /* 4. List Items ki Styling */
+    /* 4. List Items Styling */
     ul {
       list-style: none;
       padding: 0;
@@ -108,11 +101,11 @@
     <h2>My To-Do List</h2>
     
     <div class="input-area">
-      <input type="text" id="taskInput" placeholder="Naya kaam likhein...">
+      <input type="text" id="taskInput" placeholder="Write a new task...">
       <button id="addBtn" onclick="addTask()">Add</button>
     </div>
 
-    <!-- Yahan saare kaamon ki list show hogi -->
+    <!-- The list of tasks will be displayed here -->
     <ul id="taskList"></ul>
   </div>
 
@@ -120,41 +113,38 @@
   <script>
     function addTask() {
       const input = document.getElementById('taskInput');
-      const taskText = input.value.trim(); // .trim() faltu khali jagah khatam karta hai
+      const taskText = input.value.trim(); // .trim() removes extra whitespaces
 
-      // Agar input khali ho to alert dikhayein
+      // Show alert if the input field is empty
       if (taskText === "") {
-        alert("Pehle kuch likhein!");
+        alert("Please write something first!");
         return;
       }
 
       const ul = document.getElementById('taskList');
 
-      // 1. Naya <li> element (list item) banana
+      // 1. Create a new <li> element (list item)
       const li = document.createElement('li');
       li.textContent = taskText;
 
-      // 2. Naya Delete Button banana
+      // 2. Create a new Delete Button
       const delBtn = document.createElement('button');
       delBtn.textContent = 'Delete';
       delBtn.className = 'delete-btn';
 
-      // 3. Delete button par click karne se line remove ho jaye
+      // 3. Remove the item when delete button is clicked
       delBtn.onclick = function() {
         li.remove();
       };
 
-      // 4. Button ko list item ke andar daalna aur list item ko main list mein daalna
+      // 4. Append button to list item, and list item to the main list
       li.appendChild(delBtn);
       ul.appendChild(li);
 
-      // 5. Kaam add hone ke baad input box ko dobara khali karna
+      // 5. Clear the input box after adding the task
       input.value = "";
     }
   </script>
-
-</body>
-</html>
 
 </body>
 </html>
