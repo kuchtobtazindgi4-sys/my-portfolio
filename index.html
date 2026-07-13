@@ -7,14 +7,15 @@
   <style>
     /* 1. Global Settings */
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f4f7f6;
       color: #333;
+      scroll-behavior: smooth;
     }
 
-    /* 2. Navigation Menu Header (Flexbox) */
+    /* 2. Navigation Menu Header */
     header {
       background-color: #1a1a2e;
       color: white;
@@ -25,6 +26,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     header .logo {
@@ -38,105 +40,210 @@
       text-decoration: none;
       margin-left: 20px;
       font-size: 16px;
+      font-weight: 500;
+      transition: 0.3s;
     }
 
     header nav a:hover {
       color: #00fff5;
     }
 
-    /* 3. Hero Section (Welcome Area) */
+    /* 3. Hero Section */
     .hero {
-      background-color: #16213e;
+      background: linear-gradient(135deg, #16213e, #1a1a2e);
       color: white;
       text-align: center;
-      padding: 80px 20px;
+      padding: 100px 20px;
     }
 
     .hero h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
+      font-size: 45px;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
     }
 
     .hero p {
-      font-size: 20px;
-      color: #bbb;
+      font-size: 22px;
+      color: #00fff5;
+      margin-bottom: 30px;
     }
 
-    /* 4. Projects Section (Grid Layout - FIXED) */
-    .projects-section {
-      padding: 50px 20px;
+    .hero .btn-main {
+      padding: 12px 25px;
+      background-color: #00fff5;
+      color: #1a1a2e;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 25px;
+      box-shadow: 0 0 15px rgba(0,255,245,0.4);
+      transition: 0.3s;
+    }
+
+    .hero .btn-main:hover {
+      background-color: white;
+      box-shadow: 0 0 25px rgba(255,255,255,0.6);
+    }
+
+    /* 4. NEW: About Me & Skills Section Layout */
+    .info-section {
       max-width: 1000px;
-      margin: 0 auto;
+      margin: 60px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .info-section { grid-template-columns: 1fr; }
+    }
+
+    .about-box h2, .skills-box h2 {
+      color: #16213e;
+      border-bottom: 3px solid #16213e;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .about-box p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    /* Skills Badges Styling */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .skill-badge {
+      background-color: #16213e;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      border-left: 4px solid #00fff5;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    /* 5. Projects Section */
+    .projects-section {
+      background-color: #eef2f3;
+      padding: 60px 20px;
     }
 
     .projects-section h2 {
       text-align: center;
       margin-bottom: 40px;
+      color: #16213e;
+      font-size: 32px;
     }
 
     .project-grid {
+      max-width: 1000px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      gap: 25px;
     }
 
     .project-card {
       background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
       text-align: center;
       border-top: 4px solid #16213e;
+      transition: 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
 
     .project-card h3 {
       margin-top: 0;
+      color: #16213e;
+      font-size: 20px;
+    }
+
+    .project-card p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 60px;
     }
 
     .project-card a {
       display: inline-block;
       margin-top: 15px;
-      padding: 8px 16px;
+      padding: 10px 20px;
       background-color: #16213e;
       color: white;
       text-decoration: none;
-      border-radius: 4px;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: 0.3s;
     }
 
     .project-card a:hover {
-      background-color: #0f3460;
+      background-color: #00fff5;
+      color: #1a1a2e;
     }
 
-    /* 5. Contact Section */
+    /* 6. Contact Section */
     .contact-section {
-      background-color: #eef2f3;
-      padding: 50px 20px;
+      padding: 60px 20px;
       text-align: center;
     }
 
+    .contact-section h2 {
+      color: #16213e;
+      font-size: 32px;
+    }
+
     .contact-form {
-      max-width: 400px;
-      margin: 0 auto;
+      max-width: 450px;
+      margin: 30px auto 0 auto;
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
 
     .contact-form input, .contact-form textarea {
-      padding: 12px;
+      padding: 14px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 16px;
+      background-color: #fff;
     }
 
     .contact-form button {
-      padding: 12px;
+      padding: 14px;
       background-color: #28a745;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .contact-form button:hover {
+      background-color: #218838;
+    }
+
+    footer {
+      background-color: #1a1a2e;
+      color: #888;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -144,9 +251,10 @@
 
   <!-- Header Section -->
   <header>
-    <div class="logo">My Portfolio</div>
+    <div class="logo">Portfolio.</div>
     <nav>
       <a href="#home">Home</a>
+      <a href="#about">About</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -155,10 +263,33 @@
   <!-- Hero Section -->
   <div class="hero" id="home">
     <h1>Hi, I am a Web Developer</h1>
-    <p>I build professional websites using HTML, CSS, and JavaScript.</p>
+    <p>Crafting Clean, Responsive & Functional Web Experiences</p>
+    <a href="#projects" class="btn-main">View My Work</a>
   </div>
 
-  <!-- Projects Section (Clean & All 5 Cards Combined) -->
+  <!-- NEW SECTION: About Me & Skills (Combined Layout) -->
+  <div class="info-section" id="about">
+    <!-- About Box -->
+    <div class="about-box">
+      <h2>About Me</h2>
+      <p>I am a passionate Front-End Web Developer dedicated to building interactive, high-quality, and user-friendly web applications. I love solving coding problems and bringing creative ideas to life on the internet using clean code structures.</p>
+    </div>
+    
+    <!-- Skills Box -->
+    <div class="skills-box">
+      <h2>My Technical Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-badge">HTML5</div>
+        <div class="skill-badge">CSS3</div>
+        <div class="skill-badge">JavaScript (ES6)</div>
+        <div class="skill-badge">Git & GitHub</div>
+        <div class="skill-badge">Responsive Design</div>
+        <div class="skill-badge">API Integration</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Section -->
   <div class="projects-section" id="projects">
     <h2>My Featured Projects</h2>
     
@@ -166,21 +297,21 @@
       <!-- Card 1 -->
       <div class="project-card">
         <h3>Smart Calculator</h3>
-        <p>A functional calculator built with JavaScript that solves all kinds of math problems.</p>
+        <p>A functional calculator built with JavaScript that solves all kinds of math problems instantly.</p>
         <a href="calculator.html" target="_blank">View Project</a>
       </div>
 
       <!-- Card 2 -->
       <div class="project-card">
         <h3>Digital Clock</h3>
-        <p>A beautiful digital clock built with CSS glow effects and live JavaScript time logic.</p>
+        <p>A beautiful digital clock built with CSS neon glow effects and live JavaScript time logic.</p>
         <a href="clock.html" target="_blank">View Project</a>
       </div>
 
       <!-- Card 3 -->
       <div class="project-card">
         <h3>To-Do List App</h3>
-        <p>A highly useful web application to easily add and delete your live tasks.</p>
+        <p>A highly useful web application to easily add, manage, and delete your live daily tasks.</p>
         <a href="todo.html" target="_blank">View Project</a>
       </div>
 
@@ -194,7 +325,7 @@
       <!-- Card 5 -->
       <div class="project-card">
         <h3>Expense Tracker</h3>
-        <p>A smart personal finance manager built with JavaScript that tracks income, expenses, and updates your balance live using LocalStorage.</p>
+        <p>A smart personal finance manager that tracks income/expenses and saves data using LocalStorage.</p>
         <a href="expense.html" target="_blank">View Project</a>
       </div>
     </div>
@@ -203,7 +334,7 @@
   <!-- Contact Section -->
   <div class="contact-section" id="contact">
     <h2>Contact Me</h2>
-    <p>If you want to build a website, fill out the form below:</p>
+    <p>Have an exciting project or want to collaborate? Fill out the form below!</p>
     <form class="contact-form">
       <input type="text" placeholder="Your Name" required>
       <input type="email" placeholder="Your Email" required>
@@ -211,6 +342,10 @@
       <button type="submit">Send Message</button>
     </form>
   </div>
+
+  <footer>
+    <p>© Portfolio. All Rights Reserved.</p>
+  </footer>
 
 </body>
 </html>
