@@ -84,7 +84,7 @@
       box-shadow: 0 0 25px rgba(255,255,255,0.6);
     }
 
-    /* 4. NEW: About Me & Skills Section Layout */
+    /* 4. About Me & Skills Section Layout */
     .info-section {
       max-width: 1000px;
       margin: 60px auto;
@@ -267,15 +267,13 @@
     <a href="#projects" class="btn-main">View My Work</a>
   </div>
 
-  <!-- NEW SECTION: About Me & Skills (Combined Layout) -->
+  <!-- About Me & Skills Section -->
   <div class="info-section" id="about">
-    <!-- About Box -->
     <div class="about-box">
       <h2>About Me</h2>
       <p>I am a passionate Front-End Web Developer dedicated to building interactive, high-quality, and user-friendly web applications. I love solving coding problems and bringing creative ideas to life on the internet using clean code structures.</p>
     </div>
     
-    <!-- Skills Box -->
     <div class="skills-box">
       <h2>My Technical Skills</h2>
       <div class="skills-grid">
@@ -335,10 +333,12 @@
   <div class="contact-section" id="contact">
     <h2>Contact Me</h2>
     <p>Have an exciting project or want to collaborate? Fill out the form below!</p>
-    <form class="contact-form">
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea rows="5" placeholder="Your Message..." required></textarea>
+    
+    <!-- ZAROORI: Action ke andar apna Formspree wala unique link paste karen -->
+    <form class="contact-form" action="https://formspree.io" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="_replyto" placeholder="Your Email" required>
+      <textarea rows="5" name="message" placeholder="Your Message..." required></textarea>
       <button type="submit">Send Message</button>
     </form>
   </div>
@@ -348,18 +348,4 @@
   </footer>
 
 </body>
-</html>  <!-- Contact Section (Formspree Connected) -->
-  <div class="contact-section" id="contact">
-    <h2>Contact Me</h2>
-    <p>Have an exciting project or want to collaborate? Fill out the form below!</p>
-    
-    <!-- CHANGE HERE: Added form tag with action and method attributes -->
-    <form class="contact-form" action="https://formspree.io" method="POST">
-      <!-- Input fields MUST have a 'name' attribute so Formspree can read them -->
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="_replyto" placeholder="Your Email" required>
-      <textarea rows="5" name="message" placeholder="Your Message..." required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </div>
-
+</html>
